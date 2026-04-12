@@ -1,0 +1,2908 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEIRON — Software a la Medida que Transforma Empresas | México</title>
+  <meta name="description" content="Apeiron desarrolla software a la medida para PYMES en México: sistemas de inventario, punto de venta, comandas digitales y más. Primera consulta gratis." />
+  <meta name="keywords" content="software a la medida, desarrollo de software México, sistema de inventario, punto de venta, comandas digitales, PYMES" />
+  <meta property="og:title" content="APEIRON — Software que transforma empresas" />
+  <meta property="og:description" content="Transformamos empresas con tecnología a la medida. Inventario, facturación, comandas y más." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────
+       TOKENS (Design System v1.0)
+    ───────────────────────────────────────── */
+    :root {
+      /* Official Colors */
+      --ap-purple: #7c3aed;
+      --ap-purple-mid: #8b5cf6;
+      --ap-purple-soft: #ede9fe;
+      --ap-purple-text: #4c1d95;
+
+      --ap-pink: #db2777;
+      --ap-pink-mid: #ec4899;
+      --ap-pink-soft: #fce7f3;
+      --ap-pink-text: #831843;
+
+      --ap-blue: #2563eb;
+      --ap-blue-mid: #3b82f6;
+      --ap-blue-soft: #eff6ff;
+      --ap-blue-text: #1e3a8a;
+
+      /* UI Tokens */
+      --bg: #06040F;
+      --bg2: #0D0A1E;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.92);
+      --muted: #7B7A9A;
+      --white: #FFFFFF;
+
+      /* Radii */
+      --r-sm: 10px;
+      --r-md: 14px;
+      --r-lg: 20px;
+      --r-pill: 9999px;
+
+      /* Shadows */
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+      --shadow-md: 0 8px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1);
+      --shadow-purple: 0 0 20px rgba(124,58,237,0.3);
+
+      /* Typography */
+      --font-d: 'DM Sans', sans-serif;
+      --font-b: 'Inter', sans-serif;
+    }
+
+    /* ─────────────────────────────────────────
+       RESET
+    ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─────────────────────────────────────────
+       NOISE TEXTURE OVERLAY
+    ───────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ─────────────────────────────────────────
+       GRID LINES BACKGROUND
+    ───────────────────────────────────────── */
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(63,47,208,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(47,112,208,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* ─────────────────────────────────────────
+       NAVBAR
+    ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(6,4,15,0.7);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    .nav-logo {
+      font-family: var(--font-d);
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--ap-purple), var(--ap-blue));
+      color: var(--white) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--r-pill);
+      font-weight: 500 !important;
+      font-size: 0.85rem !important;
+      box-shadow: 0 4px 15px rgba(124,58,237,0.3);
+      transition: all 0.250s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .nav-cta:hover {
+      box-shadow: 0 8px 25px rgba(124,58,237,0.4) !important;
+      transform: translateY(-2px);
+      color: var(--white) !important;
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 6rem;
+      overflow: hidden;
+    }
+
+    /* Orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      animation: drift 12s ease-in-out infinite;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
+      top: -150px; left: -150px;
+      animation-duration: 14s;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(219,39,119,0.15), transparent 70%);
+      top: 10%; right: -100px;
+      animation-duration: 10s;
+      animation-delay: -5s;
+    }
+    .orb-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(37,99,235,0.12), transparent 70%);
+      bottom: -50px; left: 30%;
+      animation-duration: 16s;
+      animation-delay: -3s;
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%       { transform: translate(30px, -20px) scale(1.05); }
+      66%       { transform: translate(-20px, 15px) scale(0.97); }
+    }
+
+    /* Stars */
+    .stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--d, 3s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+      opacity: var(--op, 0.4);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--op, 0.4); }
+      50%       { opacity: 0.05; }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12rem;
+      text-transform: uppercase;
+      color: var(--ap-blue-mid);
+      border: 1px solid rgba(37,99,235,0.25);
+      border-radius: var(--r-pill);
+      padding: 0.4rem 1.1rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s ease both;
+      background: rgba(37,99,235,0.05);
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--ap-blue);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--ap-blue);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.6; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-family: var(--font-d);
+      font-size: clamp(3rem, 7vw, 5.2rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--white);
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s 0.1s ease both;
+      max-width: 900px;
+    }
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--ap-purple-mid) 0%, var(--ap-purple) 30%, var(--ap-pink) 70%, var(--ap-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin: 1.75rem auto 0;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s 0.2s ease both;
+      font-weight: 300;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2.75rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn-hero-primary {
+      background: linear-gradient(135deg, var(--ap-purple), var(--ap-purple));
+      color: var(--white);
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 30px rgba(168,85,247,0.4);
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-hero-primary:hover {
+      box-shadow: 0 12px 40px rgba(168,85,247,0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-hero-secondary {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      transition: all 0.25s;
+      backdrop-filter: blur(8px);
+    }
+    .btn-hero-secondary:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: fadeUp 1s 0.8s ease both;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(var(--ap-purple), transparent);
+      animation: scrollAnim 2s ease-in-out infinite;
+    }
+    @keyframes scrollAnim {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* Stats bar */
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s 0.4s ease both;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: var(--font-d);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--ap-purple), var(--ap-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─────────────────────────────────────────
+       SECTION COMMON
+    ───────────────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ap-blue);
+      margin-bottom: 1rem;
+    }
+    .section-tag.accent { color: var(--ap-pink); }
+    .section-tag.brand  { color: var(--ap-purple-mid); }
+
+    .section-title {
+      font-family: var(--font-d);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-body {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 580px;
+      font-weight: 300;
+      line-height: 1.75;
+    }
+
+    /* reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─────────────────────────────────────────
+       PROBLEM SECTION
+    ───────────────────────────────────────── */
+    .problem-section { background: var(--bg2); }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 3.5rem;
+    }
+
+    .problem-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .problem-card:hover {
+      border-color: rgba(168,85,247,0.3);
+      box-shadow: var(--glow-purple);
+    }
+
+    .problem-card .icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .problem-card h4 {
+      font-family: var(--font-d);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .problem-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Right side — after arrow */
+    .problem-layout {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 2rem;
+      align-items: center;
+      margin-top: 3.5rem;
+    }
+
+    .problem-col h3 {
+      font-family: var(--font-d);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .problem-col.before h3 { color: #F87171; }
+    .problem-col.after  h3 { color: var(--ap-purple); }
+
+    .problem-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 0.6rem;
+      font-size: 0.88rem;
+    }
+
+    .problem-col.before .problem-item { 
+      background: rgba(255,255,255,0.02); 
+      border: 1px solid rgba(255,255,255,0.05); 
+      color: var(--muted); 
+      filter: grayscale(0.5);
+    }
+    
+    .problem-col.after .problem-item { 
+      background: rgba(124,58,237,0.08); 
+      border: 1px solid rgba(124,58,237,0.25); 
+      color: var(--white); 
+      box-shadow: 0 4px 15px rgba(124,58,237,0.1);
+      backdrop-filter: blur(4px);
+      font-weight: 500;
+    }
+
+    .problem-col.after .problem-item span {
+      background: rgba(124,58,237,0.2);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      margin-right: 0.5rem;
+    }
+
+    .problem-arrow {
+      font-size: 2rem;
+      color: var(--ap-purple);
+      text-align: center;
+    }
+
+    /* ─────────────────────────────────────────
+       SAAS PRODUCT ADVERTISING
+    ───────────────────────────────────────── */
+    .saas-section {
+      background: #06040F;
+      position: relative;
+      overflow: hidden;
+      padding: 8rem 0;
+    }
+
+    .saas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-top: 4rem;
+    }
+
+    .saas-product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 3rem;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .saas-product-card:hover {
+      border-color: rgba(124,58,237,0.4);
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    }
+
+    .saas-product-card.aero { border-top: 4px solid var(--ap-blue-mid); }
+    .saas-product-card.zen { border-top: 4px solid var(--ap-purple-mid); }
+
+    .product-badge {
+      display: inline-block;
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+    .aero .product-badge { background: var(--ap-blue-soft); color: var(--ap-blue-text); }
+    .zen .product-badge { background: var(--ap-purple-soft); color: var(--ap-purple-text); }
+
+    .saas-product-card h3 {
+      font-family: var(--font-d);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .product-price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+    .product-price span { font-size: 0.85rem; color: var(--muted); font-weight: 400; }
+
+    .product-features {
+      list-style: none;
+      margin-bottom: 2.5rem;
+    }
+    .product-features li {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .product-features li::before { content: '✓'; color: var(--ap-blue-mid); font-weight: 900; }
+
+    .btn-saas {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 1.1rem;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+    .aero .btn-saas { background: var(--ap-blue); color: white; }
+    .zen .btn-saas { background: var(--ap-purple); color: white; }
+    .btn-saas:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+    /* Comparison Table */
+    .comparison-wrap {
+      margin-top: 6rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 2.5rem;
+    }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .comp-table th, .comp-table td {
+      padding: 1.25rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comp-table th { color: var(--white); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .comp-table td { color: var(--muted); font-size: 0.95rem; }
+    .comp-table .check { color: #34D399; font-weight: 800; }
+    .comp-table .cross { color: #F87171; }
+    .comp-table .highlight { color: var(--ap-blue-mid); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .saas-grid { grid-template-columns: 1fr; }
+      .comp-table { display: block; overflow-x: auto; }
+    }
+
+    /* ═══════════════ SERVICES ═══════════════ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3.5rem;
+    }
+
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: default;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(168,85,247,0.04));
+      pointer-events: none;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(168,85,247,0.35);
+      box-shadow: 0 20px 60px rgba(63,47,208,0.2);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle at top right, rgba(63,47,208,0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Alternating card accents */
+    .service-card:nth-child(1) { border-top: 2px solid var(--ap-purple); }
+    .service-card:nth-child(2) { border-top: 2px solid var(--ap-pink); }
+    .service-card:nth-child(3) { border-top: 2px solid var(--ap-blue); }
+    .service-card:nth-child(4) { border-top: 2px solid var(--ap-pink); }
+    .service-card:nth-child(5) { border-top: 2px solid var(--ap-blue); }
+    .service-card:nth-child(6) { border-top: 2px solid var(--ap-purple); }
+
+    .service-card:nth-child(1):hover,
+    .service-card:nth-child(6):hover { border-color: rgba(124,58,237,0.5); box-shadow: 0 15px 40px rgba(124,58,237,0.25); }
+    .service-card:nth-child(2):hover,
+    .service-card:nth-child(4):hover { border-color: rgba(219,39,119,0.4); box-shadow: 0 15px 40px rgba(219,39,119,0.25); }
+    .service-card:nth-child(3):hover,
+    .service-card:nth-child(5):hover { border-color: rgba(37,99,235,0.45); box-shadow: 0 15px 40px rgba(37,99,235,0.25); }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.4rem;
+      background: linear-gradient(135deg, rgba(63,47,208,0.2), rgba(168,85,247,0.15));
+      border: 1px solid rgba(168,85,247,0.2);
+    }
+
+    /* Service icon variants per card */
+    .service-card:nth-child(1) .service-icon { background: linear-gradient(135deg,rgba(63,47,208,0.2),rgba(63,47,208,0.08)); border-color: rgba(63,47,208,0.3); }
+    .service-card:nth-child(2) .service-icon { background: linear-gradient(135deg,rgba(168,85,247,0.2),rgba(168,85,247,0.08)); border-color: rgba(168,85,247,0.3); }
+    .service-card:nth-child(3) .service-icon { background: linear-gradient(135deg,rgba(47,112,208,0.2),rgba(47,112,208,0.08)); border-color: rgba(47,112,208,0.3); }
+    .service-card:nth-child(4) .service-icon { background: linear-gradient(135deg,rgba(168,85,247,0.2),rgba(168,85,247,0.08)); border-color: rgba(168,85,247,0.3); }
+    .service-card:nth-child(5) .service-icon { background: linear-gradient(135deg,rgba(47,112,208,0.2),rgba(47,112,208,0.08)); border-color: rgba(47,112,208,0.3); }
+    .service-card:nth-child(6) .service-icon { background: linear-gradient(135deg,rgba(63,47,208,0.2),rgba(63,47,208,0.08)); border-color: rgba(63,47,208,0.3); }
+
+    .service-card h3 {
+      font-family: var(--font-d);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.65rem;
+      letter-spacing: -0.01em;
+    }
+
+    .service-card p {
+      font-size: 0.87rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .service-tag {
+      display: inline-block;
+      margin-top: 1.25rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ap-blue-mid);
+      background: var(--ap-blue-soft);
+      border: 1px solid rgba(37,99,235,0.2);
+      border-radius: var(--r-pill);
+      padding: 0.3rem 0.8rem;
+    }
+    .service-tag.purple { color: var(--ap-purple-text); background: var(--ap-purple-soft); border-color: rgba(124,58,237,0.2); }
+    .service-tag.blue   { color: var(--ap-blue-text);   background: var(--ap-blue-soft);  border-color: rgba(37,99,235,0.2); }
+
+    /* ─────────────────────────────────────────
+       CASES / PROJECTS
+    ───────────────────────────────────────── */
+    .cases-section { background: var(--bg2); }
+
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3.5rem;
+    }
+
+    .case-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .case-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(124,58,237,0.2);
+      border-color: rgba(124,58,237,0.3);
+    }
+
+    .case-visual {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-visual.inv  { background: linear-gradient(135deg, #0D0A1E, #1A0B3B); }
+    .case-visual.tick { background: linear-gradient(135deg, #060D1E, #0B1A38); }
+    .case-visual.rest { background: linear-gradient(135deg, #0D0A18, #1E0B2E); }
+
+    .case-visual::before {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      filter: blur(50px);
+      opacity: 0.5;
+    }
+
+    .case-visual.inv::before  { background: var(--ap-purple); }
+    .case-visual.tick::before { background: var(--ap-blue); }
+    .case-visual.rest::before { background: var(--ap-purple); }
+
+    .case-visual span { position: relative; z-index: 1; }
+
+    .case-body {
+      padding: 1.5rem;
+    }
+
+    .case-industry {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ap-purple-mid);
+      margin-bottom: 0.5rem;
+    }
+
+    .case-body h3 {
+      font-family: var(--font-d);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .case-body p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .case-result {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: #A7F3D0;
+      font-weight: 500;
+    }
+
+    /* ─────────────────────────────────────────
+       WHY APEIRON
+    ───────────────────────────────────────── */
+    .why-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 3.5rem;
+    }
+
+    .why-list { list-style: none; }
+
+    .why-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding 0.2s;
+    }
+    .why-item:last-child { border-bottom: none; }
+    .why-item:hover { padding-left: 0.25rem; }
+
+    .why-num {
+      font-family: var(--font-d);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--ap-purple);
+      min-width: 2rem;
+      padding-top: 0.2rem;
+    }
+
+    .why-item:nth-child(2) .why-num { color: var(--ap-blue); }
+    .why-item:nth-child(3) .why-num { color: var(--ap-pink); }
+    .why-item:nth-child(4) .why-num { color: var(--ap-blue-mid); }
+
+    .why-item h4 {
+      font-family: var(--font-d);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
+    }
+
+    .why-item p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Right side decorative terminal */
+    .terminal {
+      background: #0A0817;
+      border: 1px solid rgba(124,58,237,0.15);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    .terminal-bar {
+      background: rgba(255,255,255,0.04);
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.r { background: #FF5F57; }
+    .dot.y { background: #FFBD2E; }
+    .dot.g { background: #27C93F; }
+
+    .terminal-title {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-left: auto;
+      margin-right: auto;
+      font-family: monospace;
+    }
+
+    .terminal-body {
+      padding: 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.9;
+    }
+
+    .t-prompt { color: var(--ap-blue); }
+    .t-cmd    { color: #E8E4FF; }
+    .t-out    { color: #7B7A9A; }
+    .t-ok     { color: #34D399; }
+    .t-warn   { color: #6E5EF5; }
+    .t-cursor {
+      display: inline-block;
+      width: 8px; height: 14px;
+      background: var(--ap-purple);
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ─────────────────────────────────────────
+       PROCESS
+    ───────────────────────────────────────── */
+    .process-section { background: var(--bg2); }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 3.5rem;
+      position: relative;
+    }
+
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--ap-purple), var(--ap-pink), var(--ap-blue));
+      z-index: 0;
+    }
+
+    .process-step {
+      text-align: center;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-bubble {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--ap-purple), var(--ap-purple-mid));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-family: var(--font-d);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      box-shadow: 0 5px 20px rgba(124,58,237,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .step-bubble.purple {
+      background: linear-gradient(135deg, var(--ap-pink-mid), var(--ap-pink));
+      box-shadow: 0 5px 20px rgba(219,39,119,0.3);
+    }
+
+    .step-bubble.blue {
+      background: linear-gradient(135deg, var(--ap-blue-mid), var(--ap-blue));
+      box-shadow: 0 5px 20px rgba(37,99,235,0.3);
+    }
+
+    .process-step h4 {
+      font-family: var(--font-d);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .process-step p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ─────────────────────────────────────────
+       CTA SECTION
+    ───────────────────────────────────────── */
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 7rem 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-glow {
+      position: absolute;
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse at 40%, rgba(63,47,208,0.2) 0%, transparent 60%),
+                  radial-gradient(ellipse at 60%, rgba(47,112,208,0.15) 0%, transparent 60%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      font-family: var(--font-d);
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+
+    .cta-section p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 480px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .cta-input {
+      flex: 1;
+      min-width: 240px;
+      padding: 0.85rem 1.2rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .cta-input::placeholder { color: var(--muted); }
+    .cta-input:focus {
+      border-color: rgba(168,85,247,0.5);
+      box-shadow: 0 0 20px rgba(168,85,247,0.1);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--ap-purple), var(--ap-blue));
+      color: var(--white);
+      padding: 0.85rem 1.8rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(63,47,208,0.4);
+      transition: all 0.25s;
+    }
+    .btn-submit:hover {
+      box-shadow: 0 12px 35px rgba(47,112,208,0.5);
+      transform: translateY(-2px);
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+      padding: 3rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #818CF8, var(--ap-purple), var(--ap-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-tagline {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--ap-blue); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ─────────────────────────────────────────
+       FOUNDERS
+    ───────────────────────────────────────── */
+    .founders-section { background: var(--bg2); }
+
+    .founders-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .founder-card {
+      position: relative;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.25rem 1.75rem 1.75rem;
+      text-align: center;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease, border-color 0.3s;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .founder-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(63,47,208,0.07) 0%, rgba(168,85,247,0.05) 60%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .founder-card:hover { transform: translateY(-8px); }
+    .founder-card:hover::before { opacity: 1; }
+
+    /* Per-card accent color for top glow */
+    .founder-card:nth-child(1) {
+      border-top: 2px solid var(--ap-purple);
+    }
+    .founder-card:nth-child(1):hover {
+      border-color: rgba(63,47,208,0.6);
+      box-shadow: 0 24px 60px rgba(63,47,208,0.25), 0 0 0 1px rgba(63,47,208,0.12);
+    }
+    .founder-card:nth-child(2) {
+      border-top: 2px solid var(--ap-purple);
+    }
+    .founder-card:nth-child(2):hover {
+      border-color: rgba(168,85,247,0.6);
+      box-shadow: 0 24px 60px rgba(168,85,247,0.25), 0 0 0 1px rgba(168,85,247,0.12);
+    }
+    .founder-card:nth-child(3) {
+      border-top: 2px solid var(--ap-blue);
+    }
+    .founder-card:nth-child(3):hover {
+      border-color: rgba(47,112,208,0.6);
+      box-shadow: 0 24px 60px rgba(47,112,208,0.25), 0 0 0 1px rgba(47,112,208,0.12);
+    }
+
+    /* Avatar ring shimmer */
+    .founder-avatar-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    .founder-avatar-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--ap-purple), var(--ap-purple), var(--ap-blue), var(--ap-purple));
+      z-index: 0;
+      animation: spin-slow 6s linear infinite;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .founder-card:hover .founder-avatar-wrap::before { opacity: 1; }
+
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .founder-avatar {
+      position: relative;
+      z-index: 1;
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-d);
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      border: 2px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+
+    .founder-card:nth-child(1) .founder-avatar {
+      background: linear-gradient(135deg, var(--ap-blue) 0%, var(--ap-blue-mid) 50%, var(--ap-purple) 100%);
+    }
+    .founder-card:nth-child(2) .founder-avatar {
+      background: linear-gradient(135deg, var(--ap-purple) 0%, var(--ap-purple-mid) 50%, var(--ap-pink) 100%);
+    }
+    .founder-card:nth-child(3) .founder-avatar {
+      background: linear-gradient(135deg, var(--ap-blue-mid) 0%, var(--ap-blue) 50%, var(--ap-purple-mid) 100%);
+    }
+
+    .founder-tag {
+      display: inline-block;
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.7rem;
+      border-radius: 100px;
+      margin-bottom: 0.75rem;
+    }
+
+    .founder-card:nth-child(1) .founder-tag {
+      color: var(--ap-blue-text);
+      background: var(--ap-blue-soft);
+      border: 1px solid rgba(37,99,235,0.2);
+    }
+    .founder-card:nth-child(2) .founder-tag {
+      color: var(--ap-purple-text);
+      background: var(--ap-purple-soft);
+      border: 1px solid rgba(124,58,237,0.2);
+    }
+    .founder-card:nth-child(3) .founder-tag {
+      color: var(--ap-blue-text);
+      background: var(--ap-blue-soft);
+      border: 1px solid rgba(37,99,235,0.2);
+    }
+
+    .founder-name {
+      font-family: var(--font-d);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .founder-role {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .founder-bio {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    .founder-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 1.25rem;
+    }
+
+    .founder-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .founder-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: rgba(255,255,255,0.03);
+      transition: all 0.22s;
+      letter-spacing: 0.02em;
+    }
+
+    .founder-link:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(168,85,247,0.4);
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    .linkedin-icon {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    /* Decorative floating badge */
+    .founders-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 1.25rem;
+      border-radius: 100px;
+      background: var(--ap-purple-soft);
+      border: 1px solid rgba(124,58,237,0.2);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ap-purple-text);
+      margin-top: 3rem;
+      margin-bottom: 0;
+    }
+
+    .founders-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--ap-purple);
+      box-shadow: 0 0 10px var(--ap-purple);
+      animation: pulse 2s ease infinite;
+    }
+
+    /* ─────────────────────────────────────────
+       PRODUCT DEMO
+    ───────────────────────────────────────── */
+    .demo-section { background: var(--bg); }
+
+    .demo-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 3.5rem;
+    }
+
+    .demo-mockup { position: relative; }
+
+    .demo-screen {
+      background: #0A0817;
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 80px rgba(124,58,237,0.15);
+      transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .demo-screen:hover { transform: perspective(800px) rotateY(0deg) rotateX(0deg); }
+
+    .demo-topbar {
+      background: rgba(255,255,255,0.04);
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .demo-topbar-url {
+      flex: 1; margin: 0 0.75rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-family: monospace;
+      color: var(--muted);
+      padding: 0.2rem 0.5rem;
+    }
+    .demo-content { padding: 1.25rem; }
+    .demo-header-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .demo-app-title {
+      font-family: var(--font-d);
+      font-size: 0.85rem; font-weight: 600; color: var(--white);
+    }
+    .demo-badge-live {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #34D399;
+      background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.25);
+      border-radius: 100px; padding: 0.2rem 0.6rem;
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .demo-badge-live::before {
+      content: ''; width: 5px; height: 5px;
+      background: #34D399; border-radius: 50%;
+      box-shadow: 0 0 6px #34D399; animation: pulse 2s infinite;
+    }
+    .demo-stats-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem; margin-bottom: 1rem;
+    }
+    .demo-stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px; padding: 0.65rem;
+    }
+    .demo-stat-label {
+      font-size: 0.6rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem;
+    }
+    .demo-stat-val {
+      font-family: var(--font-d);
+      font-size: 1.1rem; font-weight: 600; color: var(--white);
+    }
+    .demo-stat-val.green  { color: #34D399; }
+    .demo-stat-val.purple { color: var(--ap-purple-mid); }
+    .demo-stat-val.blue   { color: #60A5FA; }
+    .demo-table-header {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 0.5rem; padding: 0.4rem 0.5rem;
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 0.25rem;
+    }
+    .demo-table-row {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 0.5rem; padding: 0.5rem; font-size: 0.72rem;
+      color: var(--text); border-radius: 6px; transition: background 0.2s;
+    }
+    .demo-table-row:hover { background: rgba(255,255,255,0.03); }
+    .demo-status {
+      font-size: 0.6rem; font-weight: 600;
+      border-radius: 100px; padding: 0.15rem 0.45rem; display: inline-block;
+    }
+    .demo-status.ok   { background: rgba(52,211,153,0.12); color: #34D399; }
+    .demo-status.low  { background: rgba(251,191,36,0.12);  color: #FBBF24; }
+    .demo-status.warn { background: rgba(239,68,68,0.12);   color: #F87171; }
+
+    .demo-float-card {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: rgba(13,10,30,0.9);
+      border: 1px solid rgba(168,85,247,0.3);
+      border-radius: 12px; padding: 0.85rem 1.1rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(63,47,208,0.25);
+      animation: float 4s ease-in-out infinite;
+    }
+    .demo-float-card .fc-label {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ap-purple-mid); margin-bottom: 0.2rem;
+    }
+    .demo-float-card .fc-value {
+      font-family: var(--font-d);
+      font-size: 1.3rem; font-weight: 600; color: var(--white);
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    .demo-features { list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 0.85rem; }
+    .demo-feature-item { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.9rem; color: var(--text); font-weight: 300; }
+    .demo-feature-icon {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.85rem; margin-top: 0.05rem;
+    }
+    .demo-feature-icon.ind { background: rgba(63,47,208,0.15); }
+    .demo-feature-icon.pur { background: rgba(168,85,247,0.15); }
+    .demo-feature-icon.blu { background: rgba(47,112,208,0.15); }
+
+    /* ─────────────────────────────────────────
+       TESTIMONIALS
+    ───────────────────────────────────────── */
+    .testimonials-section { background: var(--bg2); }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3.5rem;
+    }
+
+    .testi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .testi-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(168,85,247,0.3);
+      box-shadow: 0 20px 50px rgba(63,47,208,0.18);
+    }
+    .testi-card:nth-child(1) { border-left: 2px solid var(--ap-purple); }
+    .testi-card:nth-child(2) { border-left: 2px solid var(--ap-blue); }
+    .testi-card:nth-child(3) { border-left: 2px solid var(--ap-purple); }
+
+    .testi-quote-mark {
+      font-family: var(--font-d);
+      font-size: 4.5rem; line-height: 0.8;
+      color: var(--ap-purple); opacity: 0.35;
+      margin-bottom: 0.5rem; display: block;
+    }
+    .testi-text {
+      font-size: 0.88rem; color: var(--text);
+      line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem;
+    }
+    .testi-stars { display: flex; gap: 0.2rem; margin-bottom: 1rem; }
+    .testi-star { font-size: 0.75rem; color: var(--ap-purple); text-shadow: 0 0 6px rgba(168,85,247,0.5); }
+    .testi-footer {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding-top: 1rem; border-top: 1px solid var(--border);
+    }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d); font-size: 0.85rem; font-weight: 600;
+      color: var(--white); flex-shrink: 0;
+    }
+    .testi-card:nth-child(1) .testi-avatar { background: linear-gradient(135deg, var(--ap-purple), var(--ap-pink)); }
+    .testi-card:nth-child(2) .testi-avatar { background: linear-gradient(135deg, var(--ap-blue), var(--ap-purple)); }
+    .testi-card:nth-child(3) .testi-avatar { background: linear-gradient(135deg, var(--ap-purple-mid), var(--ap-blue-mid)); }
+    .testi-info-name { font-family: var(--font-d); font-size: 0.88rem; font-weight: 600; color: var(--white); }
+    .testi-info-role { font-size: 0.75rem; color: var(--muted); }
+
+    /* ─────────────────────────────────────────
+       FAQ
+    ───────────────────────────────────────── */
+    .faq-section { background: var(--bg); }
+    .faq-list { max-width: 760px; margin: 3.5rem auto 0; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-question {
+      width: 100%; background: none; border: none;
+      padding: 1.3rem 0;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      cursor: pointer; text-align: left;
+      font-family: var(--font-d); font-size: 0.97rem; font-weight: 600;
+      color: var(--white); transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--ap-purple-mid); }
+    .faq-icon {
+      width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.35s, border-color 0.2s;
+      font-size: 1rem; color: var(--muted);
+    }
+    .faq-item.open .faq-icon {
+      background: var(--ap-purple-soft);
+      border-color: rgba(124,58,237,0.3);
+      color: var(--ap-purple);
+      transform: rotate(45deg);
+    }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.open .faq-answer { max-height: 400px; }
+    .faq-answer p {
+      padding: 0 0 1.3rem;
+      font-size: 0.88rem; color: var(--muted); line-height: 1.75; font-weight: 300;
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER IMPROVED
+    ───────────────────────────────────────── */
+    .footer-social { display: flex; gap: 0.6rem; margin-top: 0.75rem; }
+    .footer-social-link {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); transition: all 0.2s;
+    }
+    .footer-social-link:hover {
+      background: rgba(168,85,247,0.12);
+      border-color: rgba(168,85,247,0.35);
+      color: var(--ap-purple); transform: translateY(-2px);
+    }
+    .footer-social-link svg { width: 15px; height: 15px; fill: currentColor; }
+
+    .footer-bottom {
+      max-width: 1100px; margin: 1.5rem auto 0;
+      padding: 1.5rem 2rem 0;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-legal { display: flex; gap: 1.5rem; }
+    .footer-legal a { font-size: 0.75rem; color: var(--muted); transition: color 0.2s; }
+    .footer-legal a:hover { color: var(--ap-blue); }
+
+    /* ─────────────────────────────────────────
+       PRODUCT SHOWCASE (Marquee)
+    ───────────────────────────────────────── */
+    .showcase-section {
+      padding: 6rem 0;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .showcase-title-wrap {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 0 2rem;
+    }
+
+    .marquee {
+      display: flex;
+      overflow: hidden;
+      user-select: none;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 15%,
+        black 85%,
+        transparent
+      );
+    }
+
+    .marquee-track {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 2rem;
+      min-width: 100%;
+      animation: marqueeScroll 80s linear infinite;
+    }
+
+    .marquee.reverse .marquee-track {
+      animation-name: marqueeScrollReverse;
+    }
+
+    .marquee:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(-100% - 2rem)); }
+    }
+
+    @keyframes marqueeScrollReverse {
+      from { transform: translateX(calc(-100% - 2rem)); }
+      to { transform: translateX(0); }
+    }
+
+    .showcase-card {
+      width: 580px;
+      height: 360px;
+      border-radius: var(--r-md);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .showcase-card:hover {
+      transform: scale(1.03) translateY(-8px);
+      border-color: rgba(168,85,247,0.45);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .showcase-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+      transition: opacity 0.4s, transform 0.6s;
+    }
+
+    .showcase-card:hover img {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .showcase-card .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      background: linear-gradient(transparent, rgba(6,4,15,0.95));
+      opacity: 0;
+      transition: opacity 0.4s;
+      z-index: 2;
+    }
+
+    .showcase-card:hover .overlay {
+      opacity: 1;
+    }
+
+    .showcase-card .system-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ap-purple-mid);
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    .showcase-card h4 {
+      font-family: var(--font-d);
+      color: var(--white);
+      font-size: 1.2rem;
+    }
+
+    /* Placeholder for missing images */
+    .placeholder-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(124,58,237,0.07));
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .placeholder-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.5;
+    }
+
+    .placeholder-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 992px) {
+      .showcase-card {
+        width: 480px;
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .showcase-card {
+        width: 340px;
+        height: 220px;
+      }
+      .showcase-section { padding: 4rem 0; }
+        transparent
+      );
+    }
+
+    .marquee-track {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 1.5rem;
+      min-width: 100%;
+      animation: marqueeScroll 60s linear infinite;
+    }
+
+    .marquee:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(-100% - 1.5rem)); }
+    }
+
+    .showcase-card {
+      width: 480px;
+      height: 300px;
+      border-radius: var(--r-md);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .showcase-card:hover {
+      transform: scale(1.02) translateY(-5px);
+      border-color: rgba(168,85,247,0.4);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .showcase-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      transition: opacity 0.4s;
+    }
+
+    .showcase-card:hover img {
+      opacity: 1;
+    }
+
+    .showcase-card .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(transparent, rgba(6,4,15,0.9));
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .showcase-card:hover .overlay {
+      opacity: 1;
+    }
+
+    .showcase-card .system-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ap-purple-mid);
+      margin-bottom: 0.25rem;
+      display: block;
+    }
+
+    .showcase-card h4 {
+      font-family: var(--font-d);
+      color: var(--white);
+      font-size: 1rem;
+    }
+
+    /* Placeholder for missing images */
+    .placeholder-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(124,58,237,0.05));
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .placeholder-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .placeholder-text {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .showcase-card {
+        width: 320px;
+        height: 200px;
+      }
+      .nav-links { display: none; }
+      .problem-layout { grid-template-columns: 1fr; }
+      .problem-arrow { transform: rotate(90deg); }
+      .services-grid { grid-template-columns: 1fr; }
+      .cases-grid { grid-template-columns: 1fr; }
+      .why-layout { grid-template-columns: 1fr; }
+      .terminal { display: none; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .process-steps::before { display: none; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .founders-grid { grid-template-columns: 1fr; }
+      .demo-layout { grid-template-columns: 1fr; }
+      .demo-float-card { display: none; }
+      .demo-screen { transform: none; }
+      .testi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav>
+    <div class="nav-logo">
+      APEIRON
+    </div>
+    <ul class="nav-links">
+      <li><a href="#problema">El Problema</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="https://landingpos.vercel.app/" style="color: var(--ap-purple); font-weight: 700;">✦ Sistemas POS</a></li>
+      <li><a href="#casos">Casos</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#fundadores">Fundadores</a></li>
+      <li><a href="#contacto" class="nav-cta">Hablar con un asesor</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero">
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="stars" id="stars"></div>
+
+    <div class="hero-eyebrow">Desarrollo de Software a la Medida</div>
+
+    <h1>
+      Tu negocio merece<br>
+      <span class="gradient-text">tecnología real</span>
+    </h1>
+
+    <p class="hero-sub">
+      Transformamos empresas que operan con hojas de cálculo y procesos manuales en negocios digitales, ágiles y sin límites.
+    </p>
+
+    <div class="hero-cta-group">
+      <a href="#contacto" class="btn-hero-primary">
+        Agenda una consulta gratuita →
+      </a>
+      <a href="#casos" class="btn-hero-secondary">Ver casos de éxito</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">+10</div>
+        <div class="stat-label">Proyectos entregados</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Industrias atendidas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Soluciones a medida</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Escalabilidad</div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Explorar</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PROBLEMA ═══════════════ -->
+  <section class="problem-section" id="problema">
+    <div class="section-inner">
+      <p class="section-tag reveal">El diagnóstico</p>
+      <h2 class="section-title reveal">¿Tu empresa sigue atrapada en el pasado?</h2>
+      <p class="section-body reveal">
+        La mayoría de negocios pequeños y medianos pierden horas, dinero y oportunidades por depender de Excel, papel y procesos manuales que nadie puede rastrear ni escalar.
+      </p>
+
+      <div class="problem-layout reveal">
+        <div class="problem-col before">
+          <h3>❌ Sin Apeiron</h3>
+          <div class="problem-item">📋 Inventarios en Excel que nadie actualiza bien</div>
+          <div class="problem-item">📞 Pedidos por WhatsApp sin control</div>
+          <div class="problem-item">🗂 Tickets de soporte en papeles sueltos</div>
+          <div class="problem-item">🧾 Facturación manual, lenta y con errores</div>
+          <div class="problem-item">😓 Información dispersa entre personas</div>
+        </div>
+
+        <div class="problem-arrow">→</div>
+
+        <div class="problem-col after">
+          <h3>✨ Con Apeiron</h3>
+          <div class="problem-item">📦 Inventario en tiempo real desde cualquier dispositivo</div>
+          <div class="problem-item">🛒 Pedidos centralizados con historial completo</div>
+          <div class="problem-item">🎫 Sistema de tickets organizado y con métricas</div>
+          <div class="problem-item">⚡ Facturación automatizada en segundos</div>
+          <div class="problem-item">📊 Un solo panel con toda la información</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ SERVICIOS ═══════════════ -->
+  <section id="servicios">
+    <div class="section-inner">
+      <p class="section-tag accent reveal">Lo que construimos</p>
+      <h2 class="section-title reveal">Soluciones que resuelven<br>problemas reales</h2>
+      <p class="section-body reveal">No vendemos software genérico. Cada sistema lo diseñamos desde cero para los procesos específicos de tu empresa.</p>
+
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">📦</div>
+          <h3>Sistemas de Inventario</h3>
+          <p>Control total de entradas, salidas y stock en tiempo real. Alertas automáticas, reportes y trazabilidad de cada producto.</p>
+          <span class="service-tag">Inventario & Almacén</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🧾</div>
+          <h3>Facturación y Punto de Venta</h3>
+          <p>Genera facturas, maneja caja, aplica descuentos y lleva la contabilidad del día con un sistema rápido y confiable.</p>
+          <span class="service-tag purple">Finanzas & Ventas</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🎫</div>
+          <h3>Gestión de Tickets</h3>
+          <p>Sistema de soporte interno o al cliente: crea, asigna, prioriza y cierra tickets con historial completo y notificaciones.</p>
+          <span class="service-tag blue">Soporte & Operaciones</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🍽️</div>
+          <h3>Comandas Digitales</h3>
+          <p>Sistema de comandas para restaurantes visualizadas en pantalla en cocina. Reduce errores y acelera los tiempos de servicio.</p>
+          <a href="https://landingpos.vercel.app/" class="service-tag purple" style="cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-weight: 700;">Ver sistema →</a>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">📣</div>
+          <h3>Módulos de Publicidad</h3>
+          <p>Gestiona campañas, presupuestos y clientes desde una plataforma unificada. Ideal para agencias y equipos de marketing.</p>
+          <span class="service-tag blue">Marketing & Publicidad</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">⚙️</div>
+          <h3>Software a la Medida</h3>
+          <p>¿Tu operación es única? Diseñamos exactamente lo que necesitas. Escúchanos, cotizamos y construimos desde cero para ti.</p>
+          <span class="service-tag">Desarrollo Personalizado</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ SHOWCASE (INFINITE CAROUSEL) ═══════════════ -->
+  <section class="showcase-section" id="showcase">
+    <div class="showcase-title-wrap">
+      <p class="section-tag brand reveal">Showcase</p>
+      <h2 class="section-title reveal">Tecnología en movimiento</h2>
+      <p class="section-body reveal" style="margin: 0 auto;">Vistazo rápido a las interfaces de los sistemas reales que hemos desarrollado.</p>
+    </div>
+
+    <!-- Row 1: Left scrolling -->
+    <div class="marquee">
+      <div class="marquee-track">
+        <div class="showcase-card reveal">
+          <img src="aperion-pos/apps/web/public/landing/pos-1.png" alt="APEIRON POS">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Punto de Venta</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="aperion-pos/apps/web/public/landing/cmd-1.png" alt="APEIRON CMD">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Comandas Digitales</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="aperion-pos/apps/web/public/landing/pos-2.png" alt="APEIRON POS">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Inventario Dinámico</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="aperion-pos/apps/web/public/landing/cmd-2.png" alt="APEIRON CMD">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Gestión de Mesas</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <div class="placeholder-card"><div class="placeholder-icon">🍔</div><div class="placeholder-text">Screenshot: Sistema Hamburguesería</div></div>
+          <div class="overlay"><span class="system-tag">Próximamente</span><h4>App de Pedidos</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="aperion-pos/apps/web/public/landing/pos-3.png" alt="APEIRON POS">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Facturación</h4></div>
+        </div>
+      </div>
+      <!-- Duplicate Row 1 -->
+      <div class="marquee-track" aria-hidden="true">
+        <div class="showcase-card">
+          <img src="aperion-pos/apps/web/public/landing/pos-1.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Punto de Venta</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="aperion-pos/apps/web/public/landing/cmd-1.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Comandas Digitales</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="aperion-pos/apps/web/public/landing/pos-2.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Inventario Dinámico</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="aperion-pos/apps/web/public/landing/cmd-2.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Gestión de Mesas</h4></div>
+        </div>
+        <div class="showcase-card">
+          <div class="placeholder-card"><div class="placeholder-icon">🍔</div><div class="placeholder-text">Screenshot: Sistema Hamburguesería</div></div>
+          <div class="overlay"><span class="system-tag">Próximamente</span><h4>App de Pedidos</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="aperion-pos/apps/web/public/landing/pos-3.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Facturación</h4></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Right scrolling -->
+    <div class="marquee reverse">
+      <div class="marquee-track">
+        <div class="showcase-card reveal">
+          <img src="aperion-pos/apps/web/public/landing/cmd-3.png" alt="APEIRON CMD">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Visualización Cocina</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="aperion-pos/apps/web/public/landing/pos-4.png" alt="APEIRON POS">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Panel Administrativo</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="aperion-pos/apps/web/public/landing/cmd-4.png" alt="APEIRON CMD">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Historial de Tickets</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <div class="placeholder-card"><div class="placeholder-icon">💆‍♀️</div><div class="placeholder-text">Screenshot: Bot Estéticas</div></div>
+          <div class="overlay"><span class="system-tag">Próximamente</span><h4>Bot de Citas</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="aperion-pos/apps/web/public/landing/pos-5.png" alt="APEIRON POS">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Métricas de Venta</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="aperion-pos/apps/web/public/landing/cmd-5.png" alt="APEIRON CMD">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Módulo KDS</h4></div>
+        </div>
+      </div>
+      <!-- Duplicate Row 2 -->
+      <div class="marquee-track" aria-hidden="true">
+        <div class="showcase-card">
+          <img src="aperion-pos/apps/web/public/landing/cmd-3.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Visualización Cocina</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="aperion-pos/apps/web/public/landing/pos-4.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Panel Administrativo</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="aperion-pos/apps/web/public/landing/cmd-4.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Historial de Tickets</h4></div>
+        </div>
+        <div class="showcase-card">
+          <div class="placeholder-card"><div class="placeholder-icon">💆‍♀️</div><div class="placeholder-text">Screenshot: Bot Estéticas</div></div>
+          <div class="overlay"><span class="system-tag">Próximamente</span><h4>Bot de Citas</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="aperion-pos/apps/web/public/landing/pos-5.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Métricas de Venta</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="aperion-pos/apps/web/public/landing/cmd-5.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Módulo KDS</h4></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CASOS ═══════════════ -->
+  <section class="cases-section" id="casos">
+    <div class="section-inner">
+      <p class="section-tag reveal">Casos de éxito</p>
+      <h2 class="section-title reveal">Empresas que ya<br>dejaron el Excel atrás</h2>
+      <p class="section-body reveal">Proyectos reales, problemas reales, soluciones reales.</p>
+
+      <div class="cases-grid">
+        <div class="case-card reveal">
+          <div class="case-visual inv"><span>📦</span></div>
+          <div class="case-body">
+            <p class="case-industry">Distribuidora · Comercio</p>
+            <h3>Sistema de Inventario y Facturación</h3>
+            <p>Una distribuidora mediana manejaba todo en Excel. Implementamos un sistema de inventario en tiempo real con facturación integrada y control de clientes.</p>
+            <p class="case-result">✅ Reducción del 70% en errores de inventario</p>
+          </div>
+        </div>
+
+        <div class="case-card reveal">
+          <div class="case-visual tick"><span>🎫</span></div>
+          <div class="case-body">
+            <p class="case-industry">Agencia · Servicios</p>
+            <h3>App de Tickets, Publicidad y Compras</h3>
+            <p>Una agencia gestionaba solicitudes por WhatsApp y correo. Creamos una app unificada para tickets de soporte, gestión de campañas y compras internas.</p>
+            <p class="case-result">✅ Todo el equipo trabajando desde un solo panel</p>
+          </div>
+        </div>
+
+        <div class="case-card reveal">
+          <div class="case-visual rest"><span>🍽️</span></div>
+          <div class="case-body">
+            <p class="case-industry">Restaurante · Hostelería</p>
+            <h3>Sistema de Comandas Digital en Pantalla</h3>
+            <p>Un restaurante con pedidos escritos a mano y confusiones en cocina. Instalamos un sistema de comandas digital con pantalla en cocina y tableta para meseros.</p>
+            <div style="margin-top: 1rem; display: flex; align-items: center; justify-content: space-between;">
+                <p class="case-result" style="margin-top: 0;">✅ Tiempo de entrega reducido a la mitad</p>
+                <a href="https://landingpos.vercel.app/" style="font-size: 0.75rem; color: var(--ap-purple); font-weight: 700; text-decoration: underline;">Ver Demo →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ═══════════════ SAAS ADVERTISING ═══════════════ -->
+  <section class="saas-section" id="productos">
+    <div class="grid-bg"></div>
+    <div class="section-inner">
+      <div style="text-align:center; margin-bottom: 4rem;">
+        <p class="section-tag brand reveal">Nuestra Suite SaaS</p>
+        <h2 class="section-title reveal">Software de clase mundial,<br>sin el costo de los gigantes</h2>
+        <p class="section-body reveal" style="margin: 0 auto;">No solo construimos a medida; hemos creado las herramientas definitivas para tu sector.</p>
+      </div>
+
+      <div class="saas-grid">
+        <!-- Aero POS -->
+        <div class="saas-product-card aero reveal">
+          <span class="product-badge">Retail & Tiendas</span>
+          <h3>Aperion Aero</h3>
+          <div class="product-price">$299 <span>MXN/mes</span></div>
+          <ul class="product-features">
+            <li>Venta express (< 3 clics)</li>
+            <li>Soporte Offline nativo</li>
+            <li>Cuadre ciego de caja</li>
+            <li>Inventario en tiempo real</li>
+            <li>Gestión de sucursales</li>
+          </ul>
+          <a href="https://landingpos.vercel.app/" class="btn-saas">Probar Aero POS gratis</a>
+        </div>
+
+        <!-- Zen CMD -->
+        <div class="saas-product-card zen reveal">
+          <span class="product-badge">Restaurantes & KDS</span>
+          <h3>Aperion Zen</h3>
+          <div class="product-price">$399 <span>MXN/mes</span></div>
+          <ul class="product-features">
+            <li>KDS en tiempo real (Socket.io)</li>
+            <li>Mapa visual de mesas</li>
+            <li>Estaciones de cocina</li>
+            <li>Modificadores de platillos</li>
+            <li>Alertas sonoras inteligentes</li>
+          </ul>
+          <a href="https://landingpos.vercel.app/" class="btn-saas">Activar Zen Comandas</a>
+        </div>
+      </div>
+
+      <div class="comparison-wrap reveal">
+        <h3 style="color:var(--white); margin-bottom: 1.5rem; font-family:var(--font-d);">Apeiron vs. La Competencia</h3>
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Capacidad</th>
+              <th>Legacy (Gigantes)</th>
+              <th class="highlight">Aperion Suite</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tiempo de Deploy</td>
+              <td>Días / Semanas</td>
+              <td class="check">5 Minutos</td>
+            </tr>
+            <tr>
+              <td>Arquitectura</td>
+              <td>Desktop (Antiguo)</td>
+              <td class="check">Cloud-Native / Web</td>
+            </tr>
+            <tr>
+              <td>Tiempo Real</td>
+              <td>Parcial / No aplica</td>
+              <td class="check">Socket.io Nativo</td>
+            </tr>
+            <tr>
+              <td>Accesibilidad</td>
+              <td>Limitada</td>
+              <td class="check">WCAG 2.1 AA (95%+)</td>
+            </tr>
+            <tr>
+              <td>Inversión Inicial</td>
+              <td>$$$ Licencia cara</td>
+              <td class="check">Suscripción Simple</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ POR QUÉ APEIRON ═══════════════ -->
+  <section id="nosotros">
+    <div class="section-inner">
+      <p class="section-tag brand reveal">Por qué elegirnos</p>
+      <h2 class="section-title reveal">No somos una agencia más.<br>Somos tu equipo tech.</h2>
+
+      <div class="why-layout">
+        <ul class="why-list reveal">
+          <li class="why-item">
+            <span class="why-num">01</span>
+            <div>
+              <h4>Soluciones desde cero, para ti</h4>
+              <p>Nada de plantillas ni software genérico. Analizamos tu operación y construimos exactamente lo que necesitas.</p>
+            </div>
+          </li>
+          <li class="why-item">
+            <span class="why-num">02</span>
+            <div>
+              <h4>Precio justo para PYMES</h4>
+              <p>Sabemos que no eres Google. Nuestros precios están pensados para empresas medianas que quieren crecer sin hipotecarse.</p>
+            </div>
+          </li>
+          <li class="why-item">
+            <span class="why-num">03</span>
+            <div>
+              <h4>Soporte continuo</h4>
+              <p>No desaparecemos después de entregar. Te acompañamos en la implementación, capacitación y evolución del sistema.</p>
+            </div>
+          </li>
+          <li class="why-item">
+            <span class="why-num">04</span>
+            <div>
+              <h4>Tecnología que escala</h4>
+              <p>Construimos con tecnologías modernas para que tu sistema crezca junto con tu empresa, sin límites.</p>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Decorative terminal -->
+        <div class="terminal reveal">
+          <div class="terminal-bar">
+            <div class="dot r"></div>
+            <div class="dot y"></div>
+            <div class="dot g"></div>
+            <span class="terminal-title">apeiron ~ sistema</span>
+          </div>
+          <div class="terminal-body">
+            <div><span class="t-prompt">apeiron@dev</span> <span class="t-cmd">analizar-negocio --cliente="tu empresa"</span></div>
+            <div class="t-out">› Escaneando procesos manuales...</div>
+            <div class="t-out">› Detectando cuellos de botella...</div>
+            <div class="t-ok">✓ Oportunidades de mejora encontradas: 12</div>
+            <br>
+            <div><span class="t-prompt">apeiron@dev</span> <span class="t-cmd">generar-propuesta --modo=medida</span></div>
+            <div class="t-out">› Diseñando arquitectura del sistema...</div>
+            <div class="t-out">› Calculando tiempo de entrega...</div>
+            <div class="t-ok">✓ Propuesta lista en 48 horas</div>
+            <br>
+            <div><span class="t-prompt">apeiron@dev</span> <span class="t-cmd">deploy --empresa="tu empresa"</span></div>
+            <div class="t-warn">◈ Sistema en producción</div>
+            <div class="t-ok">✓ Tu negocio ya opera en modo digital</div>
+            <br>
+            <div><span class="t-prompt">apeiron@dev</span> <span class="t-cmd">_</span><span class="t-cursor"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FUNDADORES ═══════════════ -->
+  <section class="founders-section" id="fundadores">
+    <div class="section-inner">
+      <p class="section-tag accent reveal">El equipo</p>
+      <h2 class="section-title reveal">Las personas detrás<br>de Apeiron</h2>
+      <p class="section-body reveal">Somos tres apasionados por la tecnología y los negocios. Construimos Apeiron para resolver los problemas que vimos de cerca en empresas reales.</p>
+
+      <div class="founders-grid">
+
+        <!-- Fundador 1 - Alan González -->
+        <div class="founder-card reveal">
+          <div class="founder-avatar-wrap">
+            <div class="founder-avatar">AG</div>
+          </div>
+          <span class="founder-tag">Co-Fundador · Frontend & Design</span>
+          <div class="founder-name">Alan González</div>
+          <div class="founder-role">Diseño · Frontend · Apps Móviles</div>
+          <p class="founder-bio">Ingeniero Informático con especialidad en Ciberseguridad. Experto en crear interfaces seguras e intuitivas con diseño de alto impacto para aplicaciones móviles y web.</p>
+          <div class="founder-divider"></div>
+          <div class="founder-links">
+            <a href="https://www.linkedin.com/in/alan-gonzalez-73aa74300/" target="_blank" rel="noopener" class="founder-link">
+              <svg class="linkedin-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- Fundador 2 - Christian Quiñones -->
+        <div class="founder-card reveal">
+          <div class="founder-avatar-wrap">
+            <div class="founder-avatar">CQ</div>
+          </div>
+          <span class="founder-tag">Co-Fundador · Backend & Security</span>
+          <div class="founder-name">Christian Quiñones</div>
+          <div class="founder-role">Backend · Automatizaciones · Security</div>
+          <p class="founder-bio">Ingeniero Informático con especialidad en Ciberseguridad. Especialista en arquitectura backend, automatización de procesos críticos e infraestructura segura.</p>
+          <div class="founder-divider"></div>
+          <div class="founder-links">
+            <a href="https://www.linkedin.com/in/christian-qui%C3%B1ones-0345853b5/" target="_blank" rel="noopener" class="founder-link">
+              <svg class="linkedin-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- Fundador 3 - Alan Chávez -->
+        <div class="founder-card reveal">
+          <div class="founder-avatar-wrap">
+            <div class="founder-avatar">AC</div>
+          </div>
+          <span class="founder-tag">Co-Fundador · Backend & Analytics</span>
+          <div class="founder-name">Alan Chávez</div>
+          <div class="founder-role">Backend · Análisis · Seguridad</div>
+          <p class="founder-bio">Ingeniero Informático con especialidad en Ciberseguridad. Enfocado en el análisis inteligente de datos y el desarrollo de sistemas backend robustos y optimizados.</p>
+          <div class="founder-divider"></div>
+          <div class="founder-links">
+            <a href="https://www.linkedin.com/in/manuel-ramirez-chavez-381267226/" target="_blank" rel="noopener" class="founder-link">
+              <svg class="linkedin-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;" class="reveal">
+        <div class="founders-badge">Equipo 100% mexicano · Construyendo desde 2024</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PRODUCTO DEMO ═══════════════ -->
+  <section class="demo-section" id="demo">
+    <div class="section-inner">
+      <p class="section-tag brand reveal">Plataforma en acción</p>
+      <h2 class="section-title reveal">Así luce tu negocio<br>en modo digital</h2>
+      <p class="section-body reveal">Paneles intuitivos, datos en tiempo real y control total desde cualquier dispositivo. Sin curvas de aprendizaje.</p>
+
+      <div class="demo-layout">
+        <!-- Mockup -->
+        <div class="demo-mockup reveal">
+          <div class="demo-screen">
+            <div class="demo-topbar">
+              <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+              <div class="demo-topbar-url">app.apeiron.mx/dashboard</div>
+            </div>
+            <div class="demo-content">
+              <div class="demo-header-row">
+                <span class="demo-app-title">Apeiron · Panel de Control</span>
+                <span class="demo-badge-live">En vivo</span>
+              </div>
+              <div class="demo-stats-row">
+                <div class="demo-stat-card">
+                  <div class="demo-stat-label">Ventas hoy</div>
+                  <div class="demo-stat-val green">$48,320</div>
+                </div>
+                <div class="demo-stat-card">
+                  <div class="demo-stat-label">Tickets abiertos</div>
+                  <div class="demo-stat-val purple">12</div>
+                </div>
+                <div class="demo-stat-card">
+                  <div class="demo-stat-label">Productos activos</div>
+                  <div class="demo-stat-val blue">384</div>
+                </div>
+              </div>
+              <div class="demo-table-header">
+                <span>Producto</span><span>Stock</span><span>Precio</span><span>Estado</span>
+              </div>
+              <div class="demo-table-row">
+                <span>Camiseta Clásica</span><span>142 u.</span><span>$320</span>
+                <span><span class="demo-status ok">OK</span></span>
+              </div>
+              <div class="demo-table-row">
+                <span>Zapato Deportivo</span><span>8 u.</span><span>$950</span>
+                <span><span class="demo-status low">Bajo</span></span>
+              </div>
+              <div class="demo-table-row">
+                <span>Bolsa de Tela</span><span>0 u.</span><span>$180</span>
+                <span><span class="demo-status warn">Agotado</span></span>
+              </div>
+              <div class="demo-table-row">
+                <span>Gorra Bordada</span><span>67 u.</span><span>$220</span>
+                <span><span class="demo-status ok">OK</span></span>
+              </div>
+            </div>
+          </div>
+          <!-- Floating card -->
+          <div class="demo-float-card">
+            <div class="fc-label">Alertas activas</div>
+            <div class="fc-value">3 ⚡</div>
+          </div>
+        </div>
+
+        <!-- Copy side -->
+        <div class="demo-copy reveal">
+          <ul class="demo-features">
+            <li class="demo-feature-item">
+              <div class="demo-feature-icon ind">📊</div>
+              <div><strong style="color:var(--white);font-weight:600;">Dashboard en tiempo real</strong><br>Métricas de ventas, inventario y operaciones actualizadas al instante.</div>
+            </li>
+            <li class="demo-feature-item">
+              <div class="demo-feature-icon pur">🔔</div>
+              <div><strong style="color:var(--white);font-weight:600;">Alertas inteligentes</strong><br>Notificaciones automáticas de stock bajo, pedidos pendientes y más.</div>
+            </li>
+            <li class="demo-feature-item">
+              <div class="demo-feature-icon blu">📱</div>
+              <div><strong style="color:var(--white);font-weight:600;">Acceso desde cualquier dispositivo</strong><br>Web, tablet y móvil. Tu negocio en tu bolsillo, siempre disponible.</div>
+            </li>
+            <li class="demo-feature-item">
+              <div class="demo-feature-icon ind">🔒</div>
+              <div><strong style="color:var(--white);font-weight:600;">Roles y permisos granulares</strong><br>Cada empleado ve exactamente lo que necesita y nada más.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TESTIMONIOS ═══════════════ -->
+  <section class="testimonials-section" id="testimonios">
+    <div class="section-inner">
+      <p class="section-tag reveal">Lo que dicen</p>
+      <h2 class="section-title reveal">Clientes que ya<br>operan diferente</h2>
+      <p class="section-body reveal">Resultados reales de empresas que confiaron en nosotros para dar el salto digital.</p>
+
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <span class="testi-quote-mark">"</span>
+          <div class="testi-stars">
+            <span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span>
+          </div>
+          <p class="testi-text">El sistema de inventario cambió todo. Antes perdíamos horas buscando información en diferentes hojas de Excel. Ahora en 30 segundos veo el estado completo de mi almacén.</p>
+          <div class="testi-footer">
+            <div class="testi-avatar">MR</div>
+            <div>
+              <div class="testi-info-name">Marco R.</div>
+              <div class="testi-info-role">Director, Distribuidora Oriente</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal">
+          <span class="testi-quote-mark">"</span>
+          <div class="testi-stars">
+            <span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span>
+          </div>
+          <p class="testi-text">Llevábamos los tickets por WhatsApp y se perdían constantemente. Apeiron nos entregó una plataforma que nuestro equipo adoptó en un día. La diferencia es enorme.</p>
+          <div class="testi-footer">
+            <div class="testi-avatar">SL</div>
+            <div>
+              <div class="testi-info-name">Sandra L.</div>
+              <div class="testi-info-role">Gerente de Operaciones, AgenciaMX</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal">
+          <span class="testi-quote-mark">"</span>
+          <div class="testi-stars">
+            <span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span>
+          </div>
+          <p class="testi-text">Las comandas digitales redujeron a cero las confusiones en cocina. El sistema es intuitivo, rápido y nuestros meseros lo aprendieron sin ninguna capacitación especial.</p>
+          <div class="testi-footer">
+            <div class="testi-avatar">CF</div>
+            <div>
+              <div class="testi-info-name">Carlos F.</div>
+              <div class="testi-info-role">Propietario, Restaurante La Brasa</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="faq-section" id="faq">
+    <div class="section-inner">
+      <p class="section-tag accent reveal">Preguntas frecuentes</p>
+      <h2 class="section-title reveal" style="text-align:center;">Todo lo que necesitas<br>saber antes de empezar</h2>
+
+      <div class="faq-list reveal">
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            ¿Cuánto tiempo toma desarrollar mi sistema?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Depende de la complejidad. Un sistema básico (inventario + facturación) lo entregamos en 3–5 semanas. Proyectos más completos pueden tomar de 6 a 12 semanas. Siempre te damos un cronograma claro desde la propuesta inicial.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            ¿Cuál es el costo aproximado?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Cada proyecto es diferente, por eso no tenemos tarifas fijas. Después del diagnóstico gratuito te entregamos una cotización detallada. Nuestros precios están diseñados para que sean accesibles para PYMES mexicanas, sin cuotas ocultas.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            ¿Necesito saber de tecnología para usar el sistema?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Para nada. Diseñamos interfaces simples e intuitivas pensadas para personas no técnicas. Además incluimos capacitación completa para ti y tu equipo antes del lanzamiento.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            ¿Qué pasa si necesito cambios después de la entrega?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>El sistema es tuyo. Ofrecemos soporte post-lanzamiento y planes de mantenimiento para que tu software evolucione junto con tu negocio. Nunca te dejamos solo después de la entrega.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            ¿El sistema funciona en móvil y tablet?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Sí. Todo lo que construimos es responsivo por defecto. También podemos desarrollar aplicaciones móviles nativas (iOS/Android) si tu operación lo requiere, como ya lo hemos hecho con Apeiron POS.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            ¿Mis datos están seguros?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutamente. Implementamos cifrado de datos, autenticación segura, backups automáticos diarios y acceso por roles. Desplegamos en infraestructura en la nube de alta disponibilidad según tus necesidades.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PROCESO ═══════════════ -->
+  <section class="process-section">
+    <div class="section-inner">
+      <p class="section-tag accent reveal">Cómo trabajamos</p>
+      <h2 class="section-title reveal" style="text-align:center;">Del problema al sistema<br>en 4 pasos</h2>
+
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="step-bubble">01</div>
+          <h4>Diagnóstico</h4>
+          <p>Analizamos tus procesos actuales y encontramos exactamente dónde está el dolor.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-bubble purple">02</div>
+          <h4>Propuesta</h4>
+          <p>Diseñamos la solución ideal con alcance, tecnología y costo claros desde el principio.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-bubble blue">03</div>
+          <h4>Desarrollo</h4>
+          <p>Construimos el sistema con entregas parciales para que puedas ver el avance real.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-bubble">04</div>
+          <h4>Lanzamiento</h4>
+          <p>Capacitamos a tu equipo, hacemos el go-live y te acompañamos en los primeros meses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CTA ═══════════════ -->
+  <section class="cta-section" id="contacto">
+    <div class="grid-bg"></div>
+    <div class="cta-glow"></div>
+    <div class="cta-inner">
+      <p class="section-tag">Empieza hoy</p>
+      <h2 class="reveal">
+        ¿Listo para dejar<br>el Excel atrás?
+      </h2>
+      <p class="reveal">Cuéntanos tu problema. La primera consulta es completamente gratuita y sin compromiso.</p>
+
+      <div style="margin-top:2.5rem; display:flex; flex-direction:column; gap:0.8rem; align-items:center;" class="reveal">
+        <p style="font-size:0.95rem; color:var(--white); font-weight:600; margin-bottom:0.5rem;">Números de contacto (Llamadas & WhatsApp):</p>
+        <div style="display:flex; gap:2rem; flex-wrap:wrap; justify-content:center; align-items:center;">
+          <a href="https://wa.me/526183264927" target="_blank" style="color:var(--white); font-size:1.1rem; text-decoration:none; display:flex; align-items:center; gap:0.5rem; transition:color 0.2s;" onmouseover="this.style.color='var(--ap-blue)'" onmouseout="this.style.color='white'">
+            <span style="color:#25D366;">⚡</span> 618 326 4927
+          </a>
+          <a href="https://wa.me/526182283322" target="_blank" style="color:var(--white); font-size:1.1rem; text-decoration:none; display:flex; align-items:center; gap:0.5rem; transition:color 0.2s;" onmouseover="this.style.color='var(--ap-blue)'" onmouseout="this.style.color='white'">
+            <span style="color:#25D366;">⚡</span> 618 228 3322
+          </a>
+        </div>
+        <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">
+          O si lo prefieres, escríbenos a: <a href="mailto:contacto@apeiron.mx" style="color:var(--ap-blue); text-decoration:none; font-weight:500;">contacto@apeiron.mx</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">APEIRON</div>
+        <div class="footer-tagline">Software que transforma empresas</div>
+        <div class="footer-social">
+          <a href="https://github.com/apeiron-io" target="_blank" rel="noopener" class="footer-social-link" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="mailto:contacto@apeiron.mx" class="footer-social-link" aria-label="Email">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <ul class="footer-links">
+        <li><a href="#problema">El Problema</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#casos">Casos</a></li>
+        <li><a href="#fundadores">Fundadores</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+
+      <div>
+        <div style="font-size:0.85rem; color:var(--white); font-weight:500; margin-bottom:0.4rem;">contacto@apeiron.mx</div>
+        <div style="font-size:0.82rem; color:var(--muted); margin-bottom:0.2rem;">Tel/WA: 618 326 4927</div>
+        <div style="font-size:0.82rem; color:var(--muted); margin-bottom:0.4rem;">Tel/WA: 618 228 3322</div>
+        <div style="font-size:0.82rem; color:var(--muted);">México · Disponibilidad remota</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Apeiron Software Solutions · Todos los derechos reservados</div>
+      <div class="footer-legal">
+        <a href="#">Política de Privacidad</a>
+        <a href="#">Términos de Servicio</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ JS ═══════════════ -->
+  <script>
+    /* Stars */
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.cssText = `
+        left:${Math.random()*100}%;
+        top:${Math.random()*100}%;
+        --d:${2+Math.random()*4}s;
+        --delay:${-Math.random()*5}s;
+        --op:${0.1+Math.random()*0.5};
+        width:${Math.random()>0.8?3:2}px;
+        height:${Math.random()>0.8?3:2}px;
+      `;
+      starsEl.appendChild(s);
+    }
+
+    /* Scroll reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* Navbar scroll */
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      nav.style.background = window.scrollY > 50
+        ? 'rgba(6,4,15,0.92)'
+        : 'rgba(6,4,15,0.7)';
+    });
+
+    /* FAQ Accordion */
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        document.querySelectorAll('.faq-question').forEach(b => b.setAttribute('aria-expanded', 'false'));
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
