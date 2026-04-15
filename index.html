@@ -830,13 +830,23 @@
     }
 
     .case-visual {
-      height: 160px;
+      height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 4rem;
       position: relative;
       overflow: hidden;
+    }
+
+    .case-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .case-card:hover .case-visual img {
+      transform: scale(1.1);
     }
 
     .case-visual.inv  { background: linear-gradient(135deg, #0D0A1E, #1A0B3B); }
@@ -1995,6 +2005,8 @@
       .demo-screen { transform: none; }
       .testi-grid { grid-template-columns: 1fr; }
     }
+    /* Lucide Icons Base Style */
+    .lucide { width: 1em; height: 1em; vertical-align: -0.125em; }
   </style>
 </head>
 <body>
@@ -2077,23 +2089,23 @@
 
       <div class="problem-layout reveal">
         <div class="problem-col before">
-          <h3>❌ Sin Apeiron</h3>
-          <div class="problem-item">📋 Inventarios en Excel que nadie actualiza bien</div>
-          <div class="problem-item">📞 Pedidos por WhatsApp sin control</div>
-          <div class="problem-item">🗂 Tickets de soporte en papeles sueltos</div>
-          <div class="problem-item">🧾 Facturación manual, lenta y con errores</div>
-          <div class="problem-item">😓 Información dispersa entre personas</div>
+          <h3>Sin Apeiron</h3>
+          <div class="problem-item"><i data-lucide="clipboard-x"></i> Inventarios en Excel que nadie actualiza bien</div>
+          <div class="problem-item"><i data-lucide="phone-off"></i> Pedidos por WhatsApp sin control</div>
+          <div class="problem-item"><i data-lucide="folder-open"></i> Tickets de soporte en papeles sueltos</div>
+          <div class="problem-item"><i data-lucide="receipt"></i> Facturación manual, lenta y con errores</div>
+          <div class="problem-item"><i data-lucide="frown"></i> Información dispersa entre personas</div>
         </div>
 
         <div class="problem-arrow">→</div>
 
         <div class="problem-col after">
-          <h3>✨ Con Apeiron</h3>
-          <div class="problem-item">📦 Inventario en tiempo real desde cualquier dispositivo</div>
-          <div class="problem-item">🛒 Pedidos centralizados con historial completo</div>
-          <div class="problem-item">🎫 Sistema de tickets organizado y con métricas</div>
-          <div class="problem-item">⚡ Facturación automatizada en segundos</div>
-          <div class="problem-item">📊 Un solo panel con toda la información</div>
+          <h3>Con Apeiron</h3>
+          <div class="problem-item"><i data-lucide="package-check"></i> Inventario en tiempo real desde cualquier dispositivo</div>
+          <div class="problem-item"><i data-lucide="shopping-cart"></i> Pedidos centralizados con historial completo</div>
+          <div class="problem-item"><i data-lucide="ticket"></i> Sistema de tickets organizado y con métricas</div>
+          <div class="problem-item"><i data-lucide="zap"></i> Facturación automatizada en segundos</div>
+          <div class="problem-item"><i data-lucide="layout-dashboard"></i> Un solo panel con toda la información</div>
         </div>
       </div>
     </div>
@@ -2108,37 +2120,37 @@
 
       <div class="services-grid">
         <div class="service-card reveal">
-          <div class="service-icon">📦</div>
+          <div class="service-icon"><i data-lucide="boxes"></i></div>
           <h3>Sistemas de Inventario</h3>
           <p>Control total de entradas, salidas y stock en tiempo real. Alertas automáticas, reportes y trazabilidad de cada producto.</p>
           <span class="service-tag">Inventario & Almacén</span>
         </div>
         <div class="service-card reveal">
-          <div class="service-icon">🧾</div>
+          <div class="service-icon"><i data-lucide="receipt"></i></div>
           <h3>Facturación y Punto de Venta</h3>
           <p>Genera facturas, maneja caja, aplica descuentos y lleva la contabilidad del día con un sistema rápido y confiable.</p>
           <span class="service-tag purple">Finanzas & Ventas</span>
         </div>
         <div class="service-card reveal">
-          <div class="service-icon">🎫</div>
+          <div class="service-icon"><i data-lucide="ticket"></i></div>
           <h3>Gestión de Tickets</h3>
           <p>Sistema de soporte interno o al cliente: crea, asigna, prioriza y cierra tickets con historial completo y notificaciones.</p>
           <span class="service-tag blue">Soporte & Operaciones</span>
         </div>
         <div class="service-card reveal">
-          <div class="service-icon">🍽️</div>
+          <div class="service-icon"><i data-lucide="utensils"></i></div>
           <h3>Comandas Digitales</h3>
           <p>Sistema de comandas para restaurantes visualizadas en pantalla en cocina. Reduce errores y acelera los tiempos de servicio.</p>
           <a href="https://landingpos.vercel.app/" class="service-tag purple" style="cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-weight: 700;">Ver sistema →</a>
         </div>
         <div class="service-card reveal">
-          <div class="service-icon">📣</div>
-          <h3>Módulos de Publicidad</h3>
-          <p>Gestiona campañas, presupuestos y clientes desde una plataforma unificada. Ideal para agencias y equipos de marketing.</p>
-          <span class="service-tag blue">Marketing & Publicidad</span>
+          <div class="service-icon"><i data-lucide="monitor-smartphone"></i></div>
+          <h3>Web, Imagen y Publicidad</h3>
+          <p>Diseñamos páginas web profesionales, creamos identidad visual e imágenes atractivas y gestionamos tus campañas de publicidad digital.</p>
+          <span class="service-tag blue">Presencia Digital & MKT</span>
         </div>
         <div class="service-card reveal">
-          <div class="service-icon">⚙️</div>
+          <div class="service-icon"><i data-lucide="code"></i></div>
           <h3>Software a la Medida</h3>
           <p>¿Tu operación es única? Diseñamos exactamente lo que necesitas. Escúchanos, cotizamos y construimos desde cero para ti.</p>
           <span class="service-tag">Desarrollo Personalizado</span>
@@ -2163,24 +2175,32 @@
           <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Punto de Venta</h4></div>
         </div>
         <div class="showcase-card reveal">
-          <img src="landing/cmd-1.png" alt="APEIRON CMD">
-          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Comandas Digitales</h4></div>
+          <img src="landing/cmd-3.png" alt="APEIRON CMD">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Visualización Cocina</h4></div>
         </div>
         <div class="showcase-card reveal">
-          <img src="landing/pos-2.png" alt="APEIRON POS">
-          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Inventario Dinámico</h4></div>
+          <img src="landing/ARM1.jpeg" alt="APEIRON ARM">
+          <div class="overlay"><span class="system-tag">Apeiron Arm</span><h4>Gestión de Almacén</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="landing/SALON.png" alt="APEIRON GLAM">
+          <div class="overlay"><span class="system-tag">Apeiron Glam</span><h4>Control de Estéticas</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="landing/pos-4.png" alt="APEIRON POS">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Panel Administrativo</h4></div>
         </div>
         <div class="showcase-card reveal">
           <img src="landing/cmd-2.png" alt="APEIRON CMD">
           <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Gestión de Mesas</h4></div>
         </div>
         <div class="showcase-card reveal">
-          <div class="placeholder-card"><div class="placeholder-icon">🍔</div><div class="placeholder-text">Screenshot: Sistema Hamburguesería</div></div>
-          <div class="overlay"><span class="system-tag">Próximamente</span><h4>App de Pedidos</h4></div>
+          <img src="landing/ARM3.jpeg" alt="APEIRON ARM">
+          <div class="overlay"><span class="system-tag">Apeiron Arm</span><h4>Control de Staff</h4></div>
         </div>
         <div class="showcase-card reveal">
-          <img src="landing/pos-3.png" alt="APEIRON POS">
-          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Facturación</h4></div>
+          <img src="landing/pos-5.png" alt="APEIRON POS">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Métricas de Venta</h4></div>
         </div>
       </div>
       <!-- Duplicate Row 1 -->
@@ -2190,24 +2210,32 @@
           <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Punto de Venta</h4></div>
         </div>
         <div class="showcase-card">
-          <img src="landing/cmd-1.png" alt="">
-          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Comandas Digitales</h4></div>
+          <img src="landing/cmd-3.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Visualización Cocina</h4></div>
         </div>
         <div class="showcase-card">
-          <img src="landing/pos-2.png" alt="">
-          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Inventario Dinámico</h4></div>
+          <img src="landing/ARM1.jpeg" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Arm</span><h4>Gestión de Almacén</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="landing/SALON.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Glam</span><h4>Control de Estéticas</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="landing/pos-4.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Panel Administrativo</h4></div>
         </div>
         <div class="showcase-card">
           <img src="landing/cmd-2.png" alt="">
           <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Gestión de Mesas</h4></div>
         </div>
         <div class="showcase-card">
-          <div class="placeholder-card"><div class="placeholder-icon">🍔</div><div class="placeholder-text">Screenshot: Sistema Hamburguesería</div></div>
-          <div class="overlay"><span class="system-tag">Próximamente</span><h4>App de Pedidos</h4></div>
+          <img src="landing/ARM3.jpeg" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Arm</span><h4>Control de Staff</h4></div>
         </div>
         <div class="showcase-card">
-          <img src="landing/pos-3.png" alt="">
-          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Facturación</h4></div>
+          <img src="landing/pos-5.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Métricas de Venta</h4></div>
         </div>
       </div>
     </div>
@@ -2216,24 +2244,28 @@
     <div class="marquee reverse">
       <div class="marquee-track">
         <div class="showcase-card reveal">
-          <img src="landing/cmd-3.png" alt="APEIRON CMD">
-          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Visualización Cocina</h4></div>
+          <img src="landing/cmd-1.png" alt="APEIRON CMD">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Comandas Digitales</h4></div>
         </div>
         <div class="showcase-card reveal">
-          <img src="landing/pos-4.png" alt="APEIRON POS">
-          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Panel Administrativo</h4></div>
+          <img src="landing/ARM2.jpeg" alt="APEIRON ARM">
+          <div class="overlay"><span class="system-tag">Apeiron Arm</span><h4>Reportes Inteligentes</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="landing/SALON2.png" alt="APEIRON GLAM">
+          <div class="overlay"><span class="system-tag">Apeiron Glam</span><h4>Agenda de Citas</h4></div>
+        </div>
+        <div class="showcase-card reveal">
+          <img src="landing/pos-2.png" alt="APEIRON POS">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Inventario Dinámico</h4></div>
         </div>
         <div class="showcase-card reveal">
           <img src="landing/cmd-4.png" alt="APEIRON CMD">
           <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Historial de Tickets</h4></div>
         </div>
         <div class="showcase-card reveal">
-          <div class="placeholder-card"><div class="placeholder-icon">💆‍♀️</div><div class="placeholder-text">Screenshot: Bot Estéticas</div></div>
-          <div class="overlay"><span class="system-tag">Próximamente</span><h4>Bot de Citas</h4></div>
-        </div>
-        <div class="showcase-card reveal">
-          <img src="landing/pos-5.png" alt="APEIRON POS">
-          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Métricas de Venta</h4></div>
+          <img src="landing/pos-3.png" alt="APEIRON POS">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Facturación</h4></div>
         </div>
         <div class="showcase-card reveal">
           <img src="landing/cmd-5.png" alt="APEIRON CMD">
@@ -2243,24 +2275,28 @@
       <!-- Duplicate Row 2 -->
       <div class="marquee-track" aria-hidden="true">
         <div class="showcase-card">
-          <img src="landing/cmd-3.png" alt="">
-          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Visualización Cocina</h4></div>
+          <img src="landing/cmd-1.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Comandas Digitales</h4></div>
         </div>
         <div class="showcase-card">
-          <img src="landing/pos-4.png" alt="">
-          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Panel Administrativo</h4></div>
+          <img src="landing/ARM2.jpeg" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Arm</span><h4>Reportes Inteligentes</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="landing/SALON2.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Glam</span><h4>Agenda de Citas</h4></div>
+        </div>
+        <div class="showcase-card">
+          <img src="landing/pos-2.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Inventario Dinámico</h4></div>
         </div>
         <div class="showcase-card">
           <img src="landing/cmd-4.png" alt="">
           <div class="overlay"><span class="system-tag">Apeiron Zen</span><h4>Historial de Tickets</h4></div>
         </div>
         <div class="showcase-card">
-          <div class="placeholder-card"><div class="placeholder-icon">💆‍♀️</div><div class="placeholder-text">Screenshot: Bot Estéticas</div></div>
-          <div class="overlay"><span class="system-tag">Próximamente</span><h4>Bot de Citas</h4></div>
-        </div>
-        <div class="showcase-card">
-          <img src="landing/pos-5.png" alt="">
-          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Métricas de Venta</h4></div>
+          <img src="landing/pos-3.png" alt="">
+          <div class="overlay"><span class="system-tag">Apeiron Aero</span><h4>Facturación</h4></div>
         </div>
         <div class="showcase-card">
           <img src="landing/cmd-5.png" alt="">
@@ -2279,33 +2315,33 @@
 
       <div class="cases-grid">
         <div class="case-card reveal">
-          <div class="case-visual inv"><span>📦</span></div>
+          <div class="case-visual"><img src="landing/ALMACEN.jpg" alt="Sistema de Inventario Distribuidora"></div>
           <div class="case-body">
             <p class="case-industry">Distribuidora · Comercio</p>
             <h3>Sistema de Inventario y Facturación</h3>
             <p>Una distribuidora mediana manejaba todo en Excel. Implementamos un sistema de inventario en tiempo real con facturación integrada y control de clientes.</p>
-            <p class="case-result">✅ Reducción del 70% en errores de inventario</p>
+            <p class="case-result"><i data-lucide="check-circle-2" style="width:16px;height:16px;display:inline-block;vertical-align:-3px;color:#34D399;margin-right:4px;"></i> Reducción del 70% en errores de inventario</p>
           </div>
         </div>
 
         <div class="case-card reveal">
-          <div class="case-visual tick"><span>🎫</span></div>
+          <div class="case-visual"><img src="landing/OFICINA.jpg" alt="App de Tickets Agencia"></div>
           <div class="case-body">
             <p class="case-industry">Agencia · Servicios</p>
             <h3>App de Tickets, Publicidad y Compras</h3>
             <p>Una agencia gestionaba solicitudes por WhatsApp y correo. Creamos una app unificada para tickets de soporte, gestión de campañas y compras internas.</p>
-            <p class="case-result">✅ Todo el equipo trabajando desde un solo panel</p>
+            <p class="case-result"><i data-lucide="check-circle-2" style="width:16px;height:16px;display:inline-block;vertical-align:-3px;color:#34D399;margin-right:4px;"></i> Todo el equipo trabajando desde un solo panel</p>
           </div>
         </div>
 
         <div class="case-card reveal">
-          <div class="case-visual rest"><span>🍽️</span></div>
+          <div class="case-visual"><img src="landing/MESERO.jpg" alt="Comandas Digitales Restaurante"></div>
           <div class="case-body">
             <p class="case-industry">Restaurante · Hostelería</p>
             <h3>Sistema de Comandas Digital en Pantalla</h3>
             <p>Un restaurante con pedidos escritos a mano y confusiones en cocina. Instalamos un sistema de comandas digital con pantalla en cocina y tableta para meseros.</p>
             <div style="margin-top: 1rem; display: flex; align-items: center; justify-content: space-between;">
-                <p class="case-result" style="margin-top: 0;">✅ Tiempo de entrega reducido a la mitad</p>
+                <p class="case-result" style="margin-top: 0;"><i data-lucide="check-circle-2" style="width:16px;height:16px;display:inline-block;vertical-align:-3px;color:#34D399;margin-right:4px;"></i> Tiempo de entrega reducido a la mitad</p>
                 <a href="https://landingpos.vercel.app/" style="font-size: 0.75rem; color: var(--ap-purple); font-weight: 700; text-decoration: underline;">Ver Demo →</a>
             </div>
           </div>
@@ -2595,7 +2631,7 @@
           <!-- Floating card -->
           <div class="demo-float-card">
             <div class="fc-label">Alertas activas</div>
-            <div class="fc-value">3 ⚡</div>
+            <div class="fc-value" style="display:flex;align-items:center;justify-content:center;gap:4px;">3 <i data-lucide="zap" style="width:18px;height:18px;"></i></div>
           </div>
         </div>
 
@@ -2603,19 +2639,19 @@
         <div class="demo-copy reveal">
           <ul class="demo-features">
             <li class="demo-feature-item">
-              <div class="demo-feature-icon ind">📊</div>
+              <div class="demo-feature-icon ind"><i data-lucide="bar-chart-2"></i></div>
               <div><strong style="color:var(--white);font-weight:600;">Dashboard en tiempo real</strong><br>Métricas de ventas, inventario y operaciones actualizadas al instante.</div>
             </li>
             <li class="demo-feature-item">
-              <div class="demo-feature-icon pur">🔔</div>
+              <div class="demo-feature-icon pur"><i data-lucide="bell"></i></div>
               <div><strong style="color:var(--white);font-weight:600;">Alertas inteligentes</strong><br>Notificaciones automáticas de stock bajo, pedidos pendientes y más.</div>
             </li>
             <li class="demo-feature-item">
-              <div class="demo-feature-icon blu">📱</div>
+              <div class="demo-feature-icon blu"><i data-lucide="smartphone"></i></div>
               <div><strong style="color:var(--white);font-weight:600;">Acceso desde cualquier dispositivo</strong><br>Web, tablet y móvil. Tu negocio en tu bolsillo, siempre disponible.</div>
             </li>
             <li class="demo-feature-item">
-              <div class="demo-feature-icon ind">🔒</div>
+              <div class="demo-feature-icon ind"><i data-lucide="shield-check"></i></div>
               <div><strong style="color:var(--white);font-weight:600;">Roles y permisos granulares</strong><br>Cada empleado ve exactamente lo que necesita y nada más.</div>
             </li>
           </ul>
@@ -2798,14 +2834,14 @@
         <p style="font-size:0.95rem; color:var(--white); font-weight:600; margin-bottom:0.5rem;">Números de contacto (Llamadas & WhatsApp):</p>
         <div style="display:flex; gap:2rem; flex-wrap:wrap; justify-content:center; align-items:center;">
           <a href="https://wa.me/526183264927" target="_blank" style="color:var(--white); font-size:1.1rem; text-decoration:none; display:flex; align-items:center; gap:0.5rem; transition:color 0.2s;" onmouseover="this.style.color='var(--ap-blue)'" onmouseout="this.style.color='white'">
-            <span style="color:#25D366;">⚡</span> 618 326 4927
+            <span style="color:#25D366; display:inline-flex; align-items:center;"><i data-lucide="message-circle" style="width:16px;height:16px;"></i></span> 618 326 4927
           </a>
           <a href="https://wa.me/526182283322" target="_blank" style="color:var(--white); font-size:1.1rem; text-decoration:none; display:flex; align-items:center; gap:0.5rem; transition:color 0.2s;" onmouseover="this.style.color='var(--ap-blue)'" onmouseout="this.style.color='white'">
-            <span style="color:#25D366;">⚡</span> 618 228 3322
+            <span style="color:#25D366; display:inline-flex; align-items:center;"><i data-lucide="message-circle" style="width:16px;height:16px;"></i></span> 618 228 3322
           </a>
         </div>
         <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">
-          O si lo prefieres, escríbenos a: <a href="mailto:contacto@apeiron.mx" style="color:var(--ap-blue); text-decoration:none; font-weight:500;">contacto@apeiron.mx</a>
+          O si lo prefieres, escríbenos a: <a href="mailto:apeiron.contacto.dev@gmail.com" style="color:var(--ap-blue); text-decoration:none; font-weight:500;">apeiron.contacto.dev@gmail.com</a>
         </p>
       </div>
     </div>
@@ -2821,7 +2857,7 @@
           <a href="https://github.com/apeiron-io" target="_blank" rel="noopener" class="footer-social-link" aria-label="GitHub">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           </a>
-          <a href="mailto:contacto@apeiron.mx" class="footer-social-link" aria-label="Email">
+          <a href="mailto:apeiron.contacto.dev@gmail.com" class="footer-social-link" aria-label="Email">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           </a>
         </div>
@@ -2837,7 +2873,7 @@
       </ul>
 
       <div>
-        <div style="font-size:0.85rem; color:var(--white); font-weight:500; margin-bottom:0.4rem;">contacto@apeiron.mx</div>
+        <div style="font-size:0.85rem; color:var(--white); font-weight:500; margin-bottom:0.4rem;">apeiron.contacto.dev@gmail.com</div>
         <div style="font-size:0.82rem; color:var(--muted); margin-bottom:0.2rem;">Tel/WA: 618 326 4927</div>
         <div style="font-size:0.82rem; color:var(--muted); margin-bottom:0.4rem;">Tel/WA: 618 228 3322</div>
         <div style="font-size:0.82rem; color:var(--muted);">México · Disponibilidad remota</div>
@@ -2903,6 +2939,12 @@
         }
       });
     });
+
+    /* Initialize Lucide Icons after CDN loads */
+    document.addEventListener("DOMContentLoaded", function() {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
   </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </body>
 </html>
