@@ -1886,8 +1886,17 @@
       .terminal { display: none; }
       .process-steps { grid-template-columns: 1fr; }
       .process-steps::before { display: none; }
-      .footer-inner { flex-direction: column; text-align: center; gap: 3rem; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; gap: 2rem; }
       .footer-bottom { flex-direction: column; text-align: center; }
+      .footer-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0.75rem 1rem;
+        text-align: center;
+        width: 100%;
+        max-width: 320px;
+      }
+      footer { padding: 2.5rem 1rem; }
       .founders-grid { grid-template-columns: 1fr; }
       .demo-layout { grid-template-columns: 1fr; }
       .demo-float-card { display: none; }
@@ -1905,6 +1914,7 @@
       .stat-num { font-size: 1.4rem; }
       .nav-logo { font-size: 1rem; }
       .hero-eyebrow { font-size: 0.65rem; padding: 0.4rem 0.8rem; }
+      .footer-links { grid-template-columns: 1fr 1fr; max-width: 220px; }
     }
     /* Lucide Icons Base Style */
     .lucide { width: 1em; height: 1em; vertical-align: -0.125em; }
