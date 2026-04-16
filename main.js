@@ -47,3 +47,28 @@
         }
       });
     });
+
+    /* Mobile Menu Toggle */
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuClose = document.getElementById('menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+
+    if (menuToggle && menuClose && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+        document.body.classList.add('menu-open');
+      });
+
+      menuClose.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      });
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        });
+      });
+    }
