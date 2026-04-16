@@ -2145,8 +2145,7 @@
       margin-bottom: 2rem;
       opacity: 0.8;
       width: 100%;
-      text-align: right; /* Alineado a la derecha hacia el globo */
-      padding-right: 1rem;
+      text-align: center;
     }
 
     .globe-wrapper {
