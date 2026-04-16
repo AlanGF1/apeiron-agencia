@@ -957,10 +957,35 @@
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      margin-top: 1rem;
       font-size: 0.8rem;
       color: #A7F3D0;
       font-weight: 500;
+    }
+
+    .case-footer {
+      margin-top: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .case-link {
+      font-size: 0.8rem;
+      color: var(--ap-purple-mid);
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .case-link:hover {
+      color: var(--ap-blue-mid);
+      transform: translateX(3px);
     }
 
     /* ─────────────────────────────────────────
